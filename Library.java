@@ -11,10 +11,24 @@ public class Library {
         this.addBooks(shelf);
 
         List<Book> findedBook = this.findAnd("羅生門", "芥川龍之介", "青空文庫", 1997);
+
         for (Book book : findedBook) {
+            this.remove(book);
+        }
+        for (Book book : shelf) {
             printBook(book);
         }
 
+    }
+
+    void remove(Book book) {
+        int index = shelf.indexOf(book);
+        shelf.remove(index);
+    }
+
+    void remove2(String title, String author, String publisher, Integer publishYear) {
+        Book book = createBook(title, author, publisher, publishYear);
+        shelf.remove(book);
     }
 
     Book find(String title) {
@@ -30,14 +44,37 @@ public class Library {
         List<Book> result = new ArrayList<Book>();
 
         for (Book book : shelf) {
-            if (this.isMatch(book, title, authors, publisher, publishYear)) {
+            if (this.andIsMatch(book, title, authors, publisher, publishYear)) {
                 result.add(book);
             }
         }
         return result;
     }
 
-    Boolean isMatch(Book book, String title, String authors,
+    List<Book> findOr(String title, String authors, String publisher, Integer publishYear) {
+        List<Book> result = new ArrayList<Book>();
+
+        for (Book book : shelf) {
+            if (this.orIsMatch(book, title, authors, publisher, publishYear)) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    Boolean andIsMatch(Book book, String title, String authors,
+            String publisher, Integer publishYear) {
+        if (book == null) {
+            return false;
+        }
+        if (Objects.equals(title, book.title) && Objects.equals(authors, book.authors)
+                && Objects.equals(publisher, book.publisher) && Objects.equals(publishYear, book.publishYear)) {
+            return true;
+        }
+        return false;
+    }
+
+    Boolean orIsMatch(Book book, String title, String authors,
             String publisher, Integer publishYear) {
         if (book == null) {
             return false;
