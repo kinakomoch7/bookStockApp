@@ -1,14 +1,23 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 public class Library {
     List<Book> shelf = new ArrayList<Book>();
+    List<User> manager = new ArrayList<User>();
 
     void run() {
         this.printWelcomeMessage();
 
         this.addBooks(shelf);
+        this.registerUsers();
+
+        Iterator<User> iterator = manager.iterator();
+        while (iterator.hasNext()) {
+            User aUser = iterator.next();
+            System.out.printf("%s %s, %d%n", aUser.name, aUser.gender, aUser.age);
+        }
 
         List<Book> findedBook = this.findAnd("羅生門", "芥川龍之介", "青空文庫", 1997);
 
@@ -19,6 +28,22 @@ public class Library {
             printBook(book);
         }
 
+    }
+
+    void registerUsers() {
+        User user1 = this.createUser("小出朋希", "男", 21);
+        manager.add(user1);
+        User user2 = this.createUser("小出朋希", "男", 21);
+        manager.add(user2);
+    }
+
+    User createUser(String name, String gender, Integer age) {
+        User user = new User();
+        user.name = name;
+        user.gender = gender;
+        user.age = age;
+
+        return user;
     }
 
     void remove(Book book) {
@@ -87,8 +112,7 @@ public class Library {
     }
 
     void printBook(Book book) {
-        System.out.printf("%s (%s) %s, %d%n",
-                book.title, book.authors, book.publisher, book.publishYear);
+        System.out.printf("%s (%s) %s, %d%n", book.title, book.authors, book.publisher, book.publishYear);
     }
 
     void addBooks(List<Book> shelf) {

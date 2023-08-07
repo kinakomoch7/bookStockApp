@@ -7,15 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * csvファイルから情報を読み取り，Bookオブジェクトを作成する．
- *
- * @author Haruaki Tamada
- */
 public class LibraryUtil {
-    /**
-     *
-     */
+
     public List<Book> readFromFile(String fileName) {
         List<Book> books = new ArrayList<Book>();
         try (BufferedReader in = new BufferedReader(
